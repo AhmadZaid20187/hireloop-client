@@ -51,7 +51,9 @@ export default function SignInPage() {
             }
 
             toast.success("Signed in successfully");
-            router.push("/");
+            setTimeout(() => {
+                window.location.href = "/"; // ✅ hard navigation, picks up session cookie
+            }, 1800);
         } catch (err) {
             toast.error("Something went wrong. Please try again.");
         } finally {

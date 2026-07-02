@@ -85,7 +85,7 @@ export default function Navbar() {
                     {/* Right side: divider, sign in, get started */}
                     <div className="flex items-center gap-4">
                         <div className="hidden h-5 w-px bg-white/15 sm:block" />
-                        {
+                        {/* {
                             user ?
                                 <>
                                     <span className="font-bold">Hi</span> {user.name}!
@@ -98,18 +98,28 @@ export default function Navbar() {
                                     className="hidden text-sm font-medium text-[#6c7bff] sm:block"
                                 >
                                     Sign In
-                                </Link>}
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 1 }}
-                            onHoverStart={() => console.log('hover started!')}
+                                </Link>} */}
+                        {isPending ? (
+                            // show nothing while session loads
+                            <div className="h-4 w-20 animate-pulse rounded bg-white/10" />
+                        ) : user ? (
+                            <>
+                                <span className="text-sm text-gray-300">Hi, <span className="font-semibold text-white">{user.name}</span>!</span>
+                                <Button onClick={handleSignOut} variant="ghost">Sign Out</Button>
+                            </>
+                        ) : (
+                            <Link href="/auth/sign-in" className="hidden text-sm font-medium text-[#6c7bff] sm:block">
+                                Sign In
+                            </Link>
+                        )}
+                        <Button
 
                             as={Link}
                             href="/get-started"
                             className="hover:cursor-pointer rounded-lg bg-[#5b4af0] px-5 py-3 font-medium text-white"
                         >
                             Get Started
-                        </motion.button>
+                        </Button>
                     </div>
                 </header>
 

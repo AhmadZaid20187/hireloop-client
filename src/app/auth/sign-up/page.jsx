@@ -1,5 +1,6 @@
 "use client";
 
+import { Radio, RadioGroup } from "@heroui/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -13,7 +14,7 @@ import {
 } from "@heroui/react";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import toast from "react-hot-toast";
-import { authClient } from "@/lib/auth-client"; // update path to your actual authClient
+import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
     const router = useRouter();
@@ -22,6 +23,7 @@ export default function SignUpPage() {
         name: "",
         email: "",
         password: "",
+        role: "seeker",
     });
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -32,8 +34,9 @@ export default function SignUpPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Submitting with role:", formData.role);
 
-        if (!formData.name || !formData.email || !formData.password) {
+        if (!formData.name || !formData.email || !formData.password || !formData.role) {
             toast.error("Please fill in all fields");
             return;
         }
@@ -50,6 +53,7 @@ export default function SignUpPage() {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,
+                role: formData.role,
             });
 
             if (error) {
@@ -60,9 +64,8 @@ export default function SignUpPage() {
 
             toast.success("Account created! Redirecting to sign in...");
 
-            // Give the toast time to actually show before navigating away
             setTimeout(() => {
-                router.push("/auth/sign-in");
+                window.location.href = "/auth/sign-in";
             }, 1800);
         } catch (err) {
             toast.error("Something went wrong. Please try again.");
@@ -76,12 +79,14 @@ export default function SignUpPage() {
                 {/* Logo */}
                 <div className="mb-8 flex justify-center">
                     <Link href="/">
-                        <Image src="/images/logo.png"
+                        <Image
+                            src="/images/logo.png"
                             alt="hireloop"
                             priority
                             className="h-12 w-auto"
                             width={120}
-                            height={120} />
+                            height={120}
+                        />
                     </Link>
                 </div>
 
@@ -159,6 +164,37 @@ export default function SignUpPage() {
                             </InputGroup>
                             <FieldError className="text-xs text-red-400" />
                         </TextField>
+
+                        {/* Role Selection */}
+                        <div className="flex flex-col gap-2">
+
+                            {/* Role Selection */}
+                            <div className="flex flex-col gap-2">
+                                <label className="text-xl text-gray-300">I am a:</label>
+                                <div className="flex gap-4">
+                                    {["seeker", "recruiter"].map((r) => (
+                                        <label
+                                            key={r}
+                                            className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-3 text-sm transition-colors ${formData.role === r
+                                                ? "border-[#5b4af0] bg-[#5b4af0]/10 text-white"
+                                                : "border-white/10 text-gray-400 hover:border-white/30"
+                                                }`}
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="role"
+                                                value={r}
+                                                checked={formData.role === r}
+                                                onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
+                                                className="hidden"
+                                            />
+                                            {r === "seeker" ? "Job Seeker" : "Recruiter"}
+                                        </label>
+                                    ))}
+                                </div>
+                                <p className="text-xs text-gray-400">Selected role: {formData.role}</p>
+                            </div>
+                        </div>
 
                         <Button
                             type="submit"

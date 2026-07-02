@@ -31,7 +31,7 @@ export default function Footer() {
                             <Image src="/images/logo.png"
                                 alt="hireloop"
                                 priority
-                                className="h-7 w-auto"
+                                className="h-12 w-auto"
                                 width={120}
                                 height={120} />
                         </Link>
