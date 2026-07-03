@@ -62,7 +62,7 @@ export default function SignInPage() {
     };
 
     return (
-        <div className="flex min-h-screen w-full items-center justify-center bg-[#0e0e10] px-4 py-12">
+        <div className="flex min-h-screen w-full items-center justify-center px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="mb-8 flex justify-center">

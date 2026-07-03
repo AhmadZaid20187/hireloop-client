@@ -18,7 +18,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="w-full px-4 py-4 bg-[#0e0e10]">
+        <nav className="w-full px-4 py-4 ">
             <div className="rounded-2xl border border-white/5 bg-[#1c1c1f]">
                 <header className="flex h-16 items-center justify-between px-6">
                     {/* Hamburger (mobile only) + Logo */}
